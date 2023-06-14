@@ -26,4 +26,13 @@ public class Account {
         this.accountType = accountType;
     }
 
+    public void deposit(BigDecimal depositAmount) {
+        currentAmount = currentAmount.add(depositAmount);
+    }
+    public void withdraw(BigDecimal withdrawAmount) {
+        if (currentAmount.compareTo(withdrawAmount) >= 0) {
+            currentAmount = currentAmount.subtract(withdrawAmount);
+        }
+    }
+
 }

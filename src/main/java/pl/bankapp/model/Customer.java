@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.bankapp.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -43,4 +44,21 @@ public class Customer {
         this.accounts = new ArrayList<>();
         this.age = Period.between(dateOfBirth, LocalDate.now()).getYears();
     }
+
+    public boolean addAccount(Account account) {
+        return accounts.add(account);
+    }
+    public boolean removeAccount(Account account) {
+        return accounts.remove(account);
+    }
+    public void listAccounts() {
+        accounts.forEach(System.out::println);
+    }
+    public Account getAccount(String accountNumber) {
+        return accounts.stream()
+                .filter(account -> account.getAccountNumber().equals(accountNumber))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("Account not found!"));
+    }
+
 }
