@@ -56,6 +56,45 @@ public class BankService {
         customer.addAccount(account);
     }
 
+    public void listCustomers() {
+        if (bank.getCustomers().size() == 0) {
+            System.out.println("Customers list empty!");
+            return;
+        }
+        System.out.println("Customers list: ");
+    }
+
+    public void listCustomerAccounts(){
+        String pesel = getPesel();
+        Customer customer = bank.findCustomer(pesel);
+        System.out.println("Account list: ");
+        customer.listAccounts();
+    }
+
+    public void removeCustomerAccount() {
+        String pesel = getPesel();
+        Customer customer = bank.findCustomer(pesel);
+
+        String accountNumber = getString("Account number : ");
+        Account accountToRemove = customer.getAccount(accountNumber);
+
+        boolean removed = customer.removeAccount(accountToRemove);
+        System.out.printf("Account removed : %s\n", removed);
+
+    }
+
+    public void removeCustomer() {
+        String pesel = getPesel();
+        boolean deleted = bank.removeCustomer(pesel);
+        System.out.printf("Customer deleted: %s", deleted);
+    }
+
+    public void getCustomerByPesel() {
+        String pesel = getPesel();
+        Customer customer = bank.findCustomer(pesel);
+        System.out.printf("Customer info: %s\n", customer);
+    }
+
     private String getPesel() {
         return getPesel();
     }
