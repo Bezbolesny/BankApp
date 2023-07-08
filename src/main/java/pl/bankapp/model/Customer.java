@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.bankapp.exception.NotFoundException;
+import pl.bankapp.mapper.CSVMapper;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -48,17 +49,27 @@ public class Customer {
     public boolean addAccount(Account account) {
         return accounts.add(account);
     }
+
     public boolean removeAccount(Account account) {
         return accounts.remove(account);
     }
+
     public void listAccounts() {
         accounts.forEach(System.out::println);
     }
+
     public Account getAccount(String accountNumber) {
         return accounts.stream()
                 .filter(account -> account.getAccountNumber().equals(accountNumber))
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("Account not found!"));
+    }
+
+    public String toCsv() {
+        return String.join(CSVMapper.DELIMITER, List.of(
+                String.valueOf(id), name, surname, phone, email, pesel, String.valueOf(age), dateOfBirth.toString(),
+                address.getCity(), address.getStreet(), address.getPostCode())
+        );
     }
 
 }

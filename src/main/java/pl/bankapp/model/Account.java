@@ -5,9 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.bankapp.enums.AccountType;
 import pl.bankapp.enums.Currency;
+import pl.bankapp.mapper.CSVMapper;
 import pl.bankapp.utils.AccountNumberGenerator;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 @Data // @Data = @ToString , @EqualsAndHashCode , @Getter / @Setter and @RequiredArgsConstructor
@@ -33,6 +35,12 @@ public class Account {
         if (currentAmount.compareTo(withdrawAmount) >= 0) {
             currentAmount = currentAmount.subtract(withdrawAmount);
         }
+    }
+
+    public String toCsv(String customerId) {
+        return String.join(CSVMapper.DELIMITER, List.of(
+                        id.toString(), accountNumber, currency.name(), accountType.name(),
+                        currentAmount.toString(), customerId));
     }
 
 }
