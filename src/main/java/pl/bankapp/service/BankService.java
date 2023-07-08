@@ -96,7 +96,7 @@ public class BankService {
     }
 
     private String getPesel() {
-        return getPesel();
+        return getString("Pesel: ");
     }
 
     private String getString(String text) {
